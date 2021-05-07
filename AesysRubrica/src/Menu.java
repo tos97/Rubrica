@@ -1,3 +1,4 @@
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
 
 public class Menu {
@@ -5,7 +6,7 @@ public class Menu {
     Scanner sc = new Scanner(System.in);
     private int n;
     private String nom,email,tel,ind;
-    private String[][] rub = new String[5][4];
+    private String[][] rub = new String[10][4];
 
     public Menu(){
         rub[0][0] = "NOME";
@@ -31,9 +32,12 @@ public class Menu {
     }
 
     public void aggiungi(){
-        System.out.print("Scrivi Nome: ");
-        nom = sc.nextLine();
-        if (nom == null)
+        do {
+            System.out.print("Scrivi Nome: ");
+            nom = sc.nextLine();
+            if (nom == "\n")
+                System.out.println("ERRORE\nci deve essere il nome obbligatorio");
+        } while(nom == "\n");
         System.out.print("Scrivi Email: ");
         email = sc.nextLine();
         System.out.print("Scrivi Numero di Telefono: ");
@@ -56,30 +60,63 @@ public class Menu {
         Search ric = new Search(rub);
         Delete del = new Delete(rub);
         String s;
-        int i;
         System.out.println("Scrivi cosa cercare:");
         s = sc.nextLine();
-        if((i = ric.cerca(s)) == 0)
-            System.err.println("Non Trovato");
-        else{
-                rub =del.cancella(i);
+        int[] trovati = ric.cerca(s);
+        int c = 0;
+        for(int i = 0;i < rub.length;i++) {
+            if (trovati[i] != 0)
+                c++;
+        }
+        if(c > 1 || c == 0) {
+            System.err.println("ATTENZIONE");
+            if (c == 0) {
+                System.out.println("Nessun elemento trovato");
+                System.out.println("controlla tra questi elementi salvati quello da cancellare");
+                PrintAll print = new PrintAll(rub);
+                print.stampa();
+            }
+            if (c > 1) {
+                System.out.println("Troppi elementi trovati a questa ricerca si più specifico");
+                System.out.println("controlla tra questi elementi trovati quello da cancellare");
+                for(int i = 0;i < rub.length;i++) {
+                    if(trovati[i] != 0)
+                        for (int j = 0; j < rub[1].length; j++) {
+                            System.out.println(rub[i][j]);
+                        }
+                }
+            }
+        }
+        if (c == 1)
+            for(int i = 0;i < rub.length;i++) {
+                if (trovati[i] != 0){
+                    Delete canc = new Delete(rub);
+                    canc.cancella(i);
+                }
             }
     }
 
     public void cerca(){
         Search ric = new Search(rub);
         String s;
-        int i;
         System.out.println("Scrivi cosa cercare:");
         s = sc.nextLine();
-        if((i = ric.cerca(s)) == 0)
-            System.err.println("Non Trovato");
-        else{
-            System.out.println("Trovato");
-            for (int j = 0; j < rub[1].length; j++) {
-                System.out.println(rub[i][j]);
+        int[] trovati = ric.cerca(s);
+        int c = 0;
+        for(int i = 0;i < rub.length;i++){
+            if(trovati[i] == 0)
+                if (c == 0 && i == (rub.length - 1))
+                    System.err.println("Non Trovato");
+            else{
+                if (c == 0)
+                    System.out.println("Trovato");
+                c++;
+                for (int j = 0; j < rub[1].length; j++) {
+                    System.out.println(rub[i][j]);
+                }
+                System.out.println();
             }
-            System.out.println();
         }
+        System.out.println();
     }
 }
