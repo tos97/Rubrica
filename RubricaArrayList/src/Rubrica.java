@@ -37,7 +37,7 @@ public class Rubrica {
     }
 
     public void printAll(){
-        System.out.println("\nRubrica:");
+        System.out.println("Rubrica:");
         for(int i = 0;i < getSize();i++){
             System.out.println("Nome: " + rubrica.get(i).getUser().getNome());
             System.out.println("Cognome: " + rubrica.get(i).getUser().getSurname());
@@ -70,7 +70,7 @@ public class Rubrica {
         for(int i = 0;i < getSize();i++) {
             if (findIndex(s, i) == true) {
                 c[0]++;
-                c[1]++;
+                c[1] = i;
             }
         }
         return c;

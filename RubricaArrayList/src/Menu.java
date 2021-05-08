@@ -11,7 +11,7 @@ public class Menu extends Rubrica{
     }
 
     public void start() {
-        System.out.println("MENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) PrintAll\n 6) Delete All");
+        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) PrintAll\n 6) Delete All");
         n = sc.nextInt();
         System.out.println();
         switch (n) {
@@ -29,21 +29,22 @@ public class Menu extends Rubrica{
     }
 
     public void aggiungi(){
+        Scanner scan = new Scanner(System.in);
         do{
             System.out.print("Scrivi Nome (obbligatorio): ");
-            nom = sc.nextLine();
+            nom = scan.nextLine();
             if (nom.length() <= 0)
                 System.out.println("ERRORE\nci deve essere il nome obbligatorio");
         } while(nom.length() <= 0);
         System.out.print("Scrivi cognome: ");
-        cog = sc.nextLine();
+        cog = scan.nextLine();
         System.out.print("Scrivi Eta: ");
-        eta = sc.nextLine();
+        eta = scan.nextLine();
         do {
             System.out.print("Scrivi Email: ");
-            email = sc.nextLine();
+            email = scan.nextLine();
             System.out.print("Scrivi Numero di Telefono: ");
-            tel = sc.nextLine();
+            tel = scan.nextLine();
             if (email.length() <= 0 && tel.length() <= 0)
                 System.out.println("ERRORE\nci deve essere almeno il numero o l'email");
         } while(email.length() <= 0 && tel.length() <= 0);
@@ -51,11 +52,12 @@ public class Menu extends Rubrica{
     }
 
     public void cerca(){
-        System.out.print("Scrivi cosa cercare:");
-        String s = sc.nextLine();
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Scrivi cosa cercare: ");
+        String s = scan.nextLine();
         int[] c = search(s);
         if(c[0] == 0)
-            System.err.println("\nNon ci sono riferimenti alla ricerca effettuata");
+            System.err.println("Non ci sono riferimenti alla ricerca effettuata");
         else{
             System.out.println("Trovato:");
             searchStampa(s);
@@ -63,9 +65,10 @@ public class Menu extends Rubrica{
     }
 
     public void cancella(){
+        Scanner scan = new Scanner(System.in);
         System.out.println("Scrivi quello che vuoi cancellare:");
-        String s = sc.nextLine();
-        int[] c = search(s);
+        String parola = scan.nextLine();
+        int[] c = search(parola);
         if(c[0] > 1 || c[0] == 0) {
             System.err.println("ATTENZIONE");
             if (c[0] == 0) {
@@ -76,21 +79,22 @@ public class Menu extends Rubrica{
             if (c[0] > 1) {
                 System.out.println("Troppi elementi trovati a questa ricerca si più specifico");
                 System.out.println("controlla tra questi elementi trovati quello da cancellare");
-                searchStampa(s);
+                searchStampa(parola);
             }
         }
         if (c[0] == 1) {
             System.out.println("vuoi cancellare questo elemento (y o n):");
             print(c[1]);
-            char r = sc.next().charAt(1);
+            char r = scan.next().charAt(0);
             if(r == 'y')
                 remove(c[1]);
         }
     }
 
     public void modifica(){
-        System.out.print("Scrivi il nome del contatto da modificare:");
-        String n = sc.nextLine();
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Scrivi il nome del contatto da modificare: ");
+        String n = scan.nextLine();
         int[] c = search(n);
         if(c[0] == 0)
             System.err.println("ATTENZIONE\nNessun contatto con questo nome trovato");
@@ -98,9 +102,9 @@ public class Menu extends Rubrica{
             System.out.println("\nContatto trovato:");
             print(c[1]);
             System.out.println("\nModifica da effettuare:");
-            n = sc.nextLine();
+            n = scan.nextLine();
             System.out.println("\n 1) Nome\n 2) Cognome\n 3) età\n 4) Numero di telefono\n 5) Email");
-            int r = sc.nextInt();
+            int r = scan.nextInt();
             switch (r){
                 case 1: modName(c[1],n); break;
                 case 2: modSurname(c[1],n); break;
