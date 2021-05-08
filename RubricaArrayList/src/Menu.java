@@ -18,7 +18,7 @@ public class Menu extends Rubrica{
             case 0: System.out.println("Fine Esercizio"); break;
             case 1: aggiungi(); break;
             case 2: cancella(); break;
-            case 3: System.out.println("non pronto2"); break;
+            case 3: modifica(); break;
             case 4: cerca(); break;
             case 5: printAll(); break;
             case 6: clear(); break;
@@ -53,8 +53,8 @@ public class Menu extends Rubrica{
     public void cerca(){
         System.out.print("Scrivi cosa cercare:");
         String s = sc.nextLine();
-        int c = search(s);
-        if(c == 0)
+        int[] c = search(s);
+        if(c[0] == 0)
             System.err.println("\nNon ci sono riferimenti alla ricerca effettuata");
         else{
             System.out.println("Trovato:");
@@ -63,27 +63,52 @@ public class Menu extends Rubrica{
     }
 
     public void cancella(){
-        System.out.println("Scrivi cosa cercare:");
+        System.out.println("Scrivi quello che vuoi cancellare:");
         String s = sc.nextLine();
-        int c = search(s);
-        if(c > 1 || c == 0) {
+        int[] c = search(s);
+        if(c[0] > 1 || c[0] == 0) {
             System.err.println("ATTENZIONE");
-            if (c == 0) {
+            if (c[0] == 0) {
                 System.out.println("Nessun elemento trovato");
                 System.out.println("controlla tra questi elementi salvati quello da cancellare");
                 printAll();
             }
-            if (c > 1) {
+            if (c[0] > 1) {
                 System.out.println("Troppi elementi trovati a questa ricerca si più specifico");
                 System.out.println("controlla tra questi elementi trovati quello da cancellare");
                 searchStampa(s);
             }
         }
-        if (c == 1)
-            for(int i = 0;i < getSize();i++) {
-                if (findIndex(s, i) == true){
-                    remove(i);
-                }
+        if (c[0] == 1) {
+            System.out.println("vuoi cancellare questo elemento (y o n):");
+            print(c[1]);
+            char r = sc.next().charAt(1);
+            if(r == 'y')
+                remove(c[1]);
+        }
+    }
+
+    public void modifica(){
+        System.out.print("Scrivi il nome del contatto da modificare:");
+        String n = sc.nextLine();
+        int[] c = search(n);
+        if(c[0] == 0)
+            System.err.println("ATTENZIONE\nNessun contatto con questo nome trovato");
+        else{
+            System.out.println("\nContatto trovato:");
+            print(c[1]);
+            System.out.println("\nModifica da effettuare:");
+            n = sc.nextLine();
+            System.out.println("\n 1) Nome\n 2) Cognome\n 3) età\n 4) Numero di telefono\n 5) Email");
+            int r = sc.nextInt();
+            switch (r){
+                case 1: modName(c[1],n); break;
+                case 2: modSurname(c[1],n); break;
+                case 3: modEta(c[1],n); break;
+                case 4: modTel(c[1],n); break;
+                case 5: modEmail(c[1],n); break;
+                default: System.out.println("Fuori range di selezione");
             }
+        }
     }
 }

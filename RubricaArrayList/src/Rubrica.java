@@ -57,11 +57,21 @@ public class Rubrica {
         System.out.println();
     }
 
-    public int search(String s){
-        int c = 0;
+    public int searchIndex(String s){
         for(int i = 0;i < getSize();i++) {
             if (findIndex(s, i) == true)
-                c++;
+                return i;
+        }
+        return -1;
+    }
+
+    public int[] search(String s){
+        int[] c = new int[2];
+        for(int i = 0;i < getSize();i++) {
+            if (findIndex(s, i) == true) {
+                c[0]++;
+                c[1]++;
+            }
         }
         return c;
     }
@@ -74,5 +84,21 @@ public class Rubrica {
                 System.out.println();
             }
         }
+    }
+
+    public void modName(int i, String s){
+        rubrica.get(i).getUser().setNome(s);
+    }
+    public void modSurname(int i, String s){
+        rubrica.get(i).getUser().setSurname(s);
+    }
+    public void modEta(int i, String s){
+        rubrica.get(i).getUser().setAge(s);
+    }
+    public void modTel(int i, String s){
+        rubrica.get(i).setNumero(s);
+    }
+    public void modEmail(int i, String s){
+        rubrica.get(i).setEmail(s);
     }
 }
