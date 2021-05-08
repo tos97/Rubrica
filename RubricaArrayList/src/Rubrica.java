@@ -56,4 +56,23 @@ public class Rubrica {
         System.out.println("Email: " + rubrica.get(i).getEmail());
         System.out.println();
     }
+
+    public int search(String s){
+        int c = 0;
+        for(int i = 0;i < getSize();i++) {
+            if (findIndex(s, i) == true)
+                c++;
+        }
+        return c;
+    }
+
+    public void searchStampa(String s){
+        int c = 0;
+        for(int i = 0;i < getSize();i++) {
+            if (findIndex(s, i) == true){
+                print(i);
+                System.out.println();
+            }
+        }
+    }
 }
