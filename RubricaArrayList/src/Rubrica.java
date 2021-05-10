@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Rubrica {
+public class Rubrica implements GestioneRubrica{
     private ArrayList<Account> rubrica = new ArrayList<Account>();
 
     public Rubrica() {
@@ -8,15 +8,36 @@ public class Rubrica {
         rubrica.add(new Account(new User("Giorgio", "Vanni", "57"), "3339196342", ""));
     }
 
-    public void add(String n,String c,String a,String e,String t){
+    /**
+     * Nell'add di caricano i nuovi elementi nella rubrica
+     * @param n indica il nome da salvare (obbligatoriamente pieno)
+     * @param c indica il cognome
+     * @param a indica l'età
+     * @param e indica l'email
+     * @param t indica il numero di telefono
+     */
+    @Override
+    public void add(String n, String c, String a, String e, String t) {
         rubrica.add(new Account(new User(n, c, a), t, e));
     }
 
-    public void remove(int index){
+    /**
+     * Rimuove un oggetto
+     * @param index posizione dell'elemento da eliminare
+     */
+    @Override
+    public void remove(int index) {
         rubrica.remove(index);
     }
 
-    public boolean findIndex(String s, int i){
+    /**
+     *Controlla se a questo indice c'è un trovamento
+     * @param s stringa cercata
+     * @param i indice analizzato
+     * @return
+     */
+    @Override
+    public boolean findIndex(String s, int i) {
         boolean n,c,a,t,e;
         n = rubrica.get(i).getUser().getNome().contains(s);
         c = rubrica.get(i).getUser().getSurname().contains(s);
@@ -28,15 +49,18 @@ public class Rubrica {
         return false;
     }
 
-    public void clear(){
+    @Override
+    public void clear() {
         rubrica.clear();
     }
 
-    public int getSize(){
+    @Override
+    public int getSize() {
         return rubrica.size();
     }
 
-    public void printAll(){
+    @Override
+    public void printAll() {
         System.out.println("Rubrica:");
         for(int i = 0;i < getSize();i++){
             System.out.println("Nome: " + rubrica.get(i).getUser().getNome());
@@ -48,7 +72,8 @@ public class Rubrica {
         }
     }
 
-    public void print(int i){
+    @Override
+    public void print(int i) {
         System.out.println("Nome: " + rubrica.get(i).getUser().getNome());
         System.out.println("Cognome: " + rubrica.get(i).getUser().getSurname());
         System.out.println("Età: " + rubrica.get(i).getUser().getAge());
@@ -57,7 +82,13 @@ public class Rubrica {
         System.out.println();
     }
 
-    public int searchIndex(String s){
+    /**
+     * trova l'indice che contiene una stringa
+     * @param s stringa da trovare
+     * @return l'indice al quale si trova o -1 se non trova nulla
+     */
+    @Override
+    public int searchIndex(String s) {
         for(int i = 0;i < getSize();i++) {
             if (findIndex(s, i) == true)
                 return i;
@@ -65,7 +96,13 @@ public class Rubrica {
         return -1;
     }
 
-    public int[] search(String s){
+    /**
+     * trova la stringa
+     * @param s stringa da cercare
+     * @return ha come risultato l'ultima posizione contenete l'indice e quanti riscontri ha
+     */
+    @Override
+    public int[] search(String s) {
         int[] c = new int[2];
         for(int i = 0;i < getSize();i++) {
             if (findIndex(s, i) == true) {
@@ -76,7 +113,12 @@ public class Rubrica {
         return c;
     }
 
-    public void searchStampa(String s){
+    /**
+     * trova e stampa il giusto contatto
+     * @param s stringa sìda cercare
+     */
+    @Override
+    public void searchStampa(String s) {
         int c = 0;
         for(int i = 0;i < getSize();i++) {
             if (findIndex(s, i) == true){
@@ -86,19 +128,53 @@ public class Rubrica {
         }
     }
 
-    public void modName(int i, String s){
+    /**
+     * Modifica il nome
+     * @param i indice da modificare
+     * @param s stringa modificata da inserire
+     */
+    @Override
+    public void modName(int i, String s) {
         rubrica.get(i).getUser().setNome(s);
     }
-    public void modSurname(int i, String s){
+
+    /**
+     * Modifica il cognome
+     * @param i indice da modificare
+     * @param s stringa modificata da inserire
+     */
+    @Override
+    public void modSurname(int i, String s) {
         rubrica.get(i).getUser().setSurname(s);
     }
-    public void modEta(int i, String s){
+
+    /**
+     * Modifica l'età
+     * @param i indice da modificare
+     * @param s stringa modificata da inserire
+     */
+    @Override
+    public void modEta(int i, String s) {
         rubrica.get(i).getUser().setAge(s);
     }
-    public void modTel(int i, String s){
+
+    /**
+     * Modifica il numero di telefono
+     * @param i indice da modificare
+     * @param s stringa modificata da inserire
+     */
+    @Override
+    public void modTel(int i, String s) {
         rubrica.get(i).setNumero(s);
     }
-    public void modEmail(int i, String s){
+
+    /**
+     * Modifica l'email
+     * @param i indice da modificare
+     * @param s stringa modificata da inserire
+     */
+    @Override
+    public void modEmail(int i, String s) {
         rubrica.get(i).setEmail(s);
     }
 }

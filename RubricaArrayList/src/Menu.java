@@ -6,8 +6,7 @@ public class Menu extends Rubrica{
     private int n;
     private String nom,cog,eta,email,tel;
 
-    public Menu() {
-        super();
+    public Menu() {super();
     }
 
     public void start() {
