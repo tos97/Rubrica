@@ -2,11 +2,18 @@ import java.util.Scanner;
 
 public class Menu extends Rubrica{
 
+    private static Menu istance;
     Scanner sc = new Scanner(System.in);
     private int n;
     private String nom,cog,eta,email,tel;
 
-    public Menu() {super();
+    private Menu(){}
+
+    public static Menu getIstance(){
+            if(istance == null) {
+                istance = new Menu();
+            }
+            return istance;
     }
 
     public void start() {
