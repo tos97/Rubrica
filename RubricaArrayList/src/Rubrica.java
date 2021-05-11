@@ -62,12 +62,12 @@ public class Rubrica implements GestioneRubrica{
     @Override
     public void printAll() {
         System.out.println("Rubrica:");
-        for(int i = 0;i < getSize();i++){
-            System.out.println("Nome: " + rubrica.get(i).getUser().getNome());
-            System.out.println("Cognome: " + rubrica.get(i).getUser().getSurname());
-            System.out.println("Età: " + rubrica.get(i).getUser().getAge());
-            System.out.println("Telefono: " + rubrica.get(i).getNumero());
-            System.out.println("Email: " + rubrica.get(i).getEmail());
+        for(Account persona: rubrica){
+            System.out.println("Nome: " + persona.getUser().getNome());
+            System.out.println("Cognome: " + persona.getUser().getSurname());
+            System.out.println("Età: " + persona.getUser().getAge());
+            System.out.println("Telefono: " + persona.getNumero());
+            System.out.println("Email: " + persona.getEmail());
             System.out.println();
         }
     }
