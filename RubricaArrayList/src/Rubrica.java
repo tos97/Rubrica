@@ -1,6 +1,10 @@
+import Interfacce.GestioneRubrica;
+import Persone.Account;
+import Persone.User;
+
 import java.util.ArrayList;
 
-public class Rubrica implements GestioneRubrica{
+public class Rubrica implements GestioneRubrica {
     private ArrayList<Account> rubrica = new ArrayList<Account>();
 
     public Rubrica() {
@@ -19,6 +23,10 @@ public class Rubrica implements GestioneRubrica{
     @Override
     public void add(String n, String c, String a, String e, String t) {
         rubrica.add(new Account(new User(n, c, a), t, e));
+    }
+
+    public void add(String d,String n, String c, String a, String e, String t) {
+        rubrica.add(new Account(new User(n,c,a,d), t, e));
     }
 
     /**
@@ -63,6 +71,7 @@ public class Rubrica implements GestioneRubrica{
     public void printAll() {
         System.out.println("Rubrica:");
         for(Account persona: rubrica){
+            System.out.println("ID: " + persona.getUser().getId());
             System.out.println("Nome: " + persona.getUser().getNome());
             System.out.println("Cognome: " + persona.getUser().getSurname());
             System.out.println("Età: " + persona.getUser().getAge());
@@ -176,5 +185,23 @@ public class Rubrica implements GestioneRubrica{
     @Override
     public void modEmail(int i, String s) {
         rubrica.get(i).setEmail(s);
+    }
+
+    public void exportJson(){
+        System.out.println("Rubrica Json:");
+        System.out.print("{rubrica:[");
+        for(int i = 0;i < getSize();i++){
+            System.out.print("{\"ID\":\"" + rubrica.get(i).getUser().getId() + "\",");
+            System.out.print("\"Nome\":\"" + rubrica.get(i).getUser().getNome() + "\",");
+            System.out.print("\"Cognome\":\"" + rubrica.get(i).getUser().getSurname() + "\",");
+            System.out.print("\"Età\":\"" + rubrica.get(i).getUser().getAge() + "\",");
+            System.out.print("\"Telefono\":\"" + rubrica.get(i).getNumero() + "\",");
+            if (i == (getSize()-1))
+                System.out.print("\"Email\":\"" + rubrica.get(i).getEmail() + "\"}");
+            else{
+                System.out.print("\"Email\":\"" + rubrica.get(i).getEmail() + "\"},");
+            }
+        }
+        System.out.println("]}");
     }
 }

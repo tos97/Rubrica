@@ -1,3 +1,5 @@
+package Interfacce;
+
 public interface GestioneRubrica {
     void add(String n,String c,String a,String e,String t);
     void remove(int index);

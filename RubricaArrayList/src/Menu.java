@@ -1,11 +1,14 @@
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class Menu extends Rubrica{
 
     private static Menu istance;
-    Scanner sc = new Scanner(System.in);
-    private int n;
-    private String nom,cog,eta,email,tel;
+    //Scanner sc = new Scanner(System.in);
+    private boolean fine = false;
+    private String id,nom,cog,eta,email,tel;
 
     private Menu(){}
 
@@ -16,21 +19,30 @@ public class Menu extends Rubrica{
             return istance;
     }
 
-    public void start() {
-        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) PrintAll\n 6) Delete All");
-        n = sc.nextInt();
-        System.out.println();
-        switch (n) {
-            case 0: System.out.println("Fine Esercizio"); break;
-            case 1: aggiungi(); break;
-            case 2: cancella(); break;
-            case 3: modifica(); break;
-            case 4: cerca(); break;
-            case 5: printAll(); break;
-            case 6: clear(); break;
-            default: System.out.println("ERRORE inserire un numero tra 0 a 4");
+    public void start(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) Print All\n 6) Delete All\n 7) Salva tramite json\n 8) print All in Json\n 9) Trasforma dati inseriti in Json");
+        try {
+            int n = scan.nextInt();
+            System.out.println();
+            switch (n) {
+                case 0: System.out.println("Fine Esercizio"); fine = true; break;
+                case 1: aggiungi();break;
+                case 2: cancella();break;
+                case 3: modifica();break;
+                case 4: cerca();break;
+                case 5: printAll();break;
+                case 6: clear();break;
+                case 7: importJson(); break;
+                case 8: exportJson(); break;
+                case 9: exportJsonSingolo(); break;
+                default: System.out.println("ERRORE inserire un numero tra 0 a 7");
+            }
         }
-        if (n != 0)
+        catch (Exception e){
+            System.out.println("\nAttenzione devi inserire un numero");
+        }
+        if (!fine)
             start();
     }
 
@@ -120,5 +132,65 @@ public class Menu extends Rubrica{
                 default: System.out.println("Fuori range di selezione");
             }
         }
+    }
+
+    public void importJson(){
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il json da salvare:");
+        String stringJson = scanner.next();
+        String[] stringSplit = stringJson.split(Pattern.quote("{"));
+        for (int i = 1;i < stringSplit.length;i++){
+            if (stringSplit[i].contains("["))
+                System.out.println();
+            else{
+                String[] stringSplitvirgola = stringSplit[i].split(",");
+                for (int j = 0;j < stringSplitvirgola.length;j++){
+                    String[] stringSplitpunti = stringSplitvirgola[j].split(":");
+                    if (j == 0)
+                        id = stringSplitpunti[1];
+                    if (j == 1)
+                        nom = stringSplitpunti[1];
+                    if (j == 2)
+                        cog = stringSplitpunti[1];
+                    if (j == 3)
+                        eta = stringSplitpunti[1];
+                    if (j == 4)
+                        tel = stringSplitpunti[1];
+                    if (j == 5)
+                        email = stringSplitpunti[1];
+                }
+                add(id,nom,cog,eta,tel,email);
+            }
+        }
+    }
+
+    public void exportJsonSingolo(){
+        Scanner scan = new Scanner(System.in);
+        do{
+            System.out.print("Scrivi Nome (obbligatorio): ");
+            nom = scan.nextLine();
+            if (nom.length() <= 0)
+                System.out.println("ERRORE\nci deve essere il nome obbligatorio");
+        } while(nom.length() <= 0);
+        System.out.print("Scrivi cognome: ");
+        cog = scan.nextLine();
+        System.out.print("Scrivi Eta: ");
+        eta = scan.nextLine();
+        do {
+            System.out.print("Scrivi Email: ");
+            email = scan.nextLine();
+            System.out.print("Scrivi Numero di Telefono: ");
+            tel = scan.nextLine();
+            if (email.length() <= 0 && tel.length() <= 0)
+                System.out.println("ERRORE\nci deve essere almeno il numero o l'email");
+        } while(email.length() <= 0 && tel.length() <= 0);
+
+        System.out.print("{\"ID\":\"" + UUID.randomUUID().toString() + "\",");
+        System.out.print("\"Nome\":\"" + nom + "\",");
+        System.out.print("\"Cognome\":\"" + cog + "\",");
+        System.out.print("\"Età\":\"" + eta + "\",");
+        System.out.print("\"Telefono\":\"" + tel + "\",");
+        System.out.print("\"Email\":\"" + email + "\"}\n");
     }
 }

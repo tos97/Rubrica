@@ -1,13 +1,34 @@
+package Persone;
+
+import java.util.UUID;
+
 public class User {
 
     private String nome;
     private String surname;
     private String age;
+    private String uid;
 
     public User(String nome, String surname, String age) {
         this.nome = nome;
         this.surname = surname;
         this.age = age;
+        this.uid = UUID.randomUUID().toString();
+    }
+
+    public User(String nome, String surname, String age,String id) {
+        this.nome = nome;
+        this.surname = surname;
+        this.age = age;
+        this.uid = id;
+    }
+
+    public String getId() {
+        return uid;
+    }
+
+    public void setId(String id) {
+        this.uid = id;
     }
 
     public String getNome() {

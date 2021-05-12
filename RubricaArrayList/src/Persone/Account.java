@@ -1,3 +1,5 @@
+package Persone;
+
 public class Account {
 
     private User user;
