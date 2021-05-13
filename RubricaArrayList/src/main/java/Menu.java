@@ -21,7 +21,7 @@ public class Menu extends Rubrica{
 
     public void start(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) Print All\n 6) Delete All\n 7) Salva tramite json\n 8) print All in Json\n 9) Trasforma dati inseriti in Json");
+        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) Print All\n 6) Delete All\n 7) Salva tramite json\n 8) print All in Json\n 9) Trasforma dati inseriti in Json (vecchio)\n 10) Trasforma dati inseriti in Json (nuovo)");
         try {
             int n = scan.nextInt();
             System.out.println();
@@ -36,6 +36,7 @@ public class Menu extends Rubrica{
                 case 7: importJson(); break;
                 case 8: exportJson(); break;
                 case 9: exportJsonSingolo(); break;
+                case 10: exportJsonSingoloNuovo(); break;
                 default: System.out.println("ERRORE inserire un numero tra 0 a 7");
             }
         }
@@ -134,6 +135,7 @@ public class Menu extends Rubrica{
         }
     }
 
+    /* vecchio metodo di importJson
     public void importJson(){
         int contatore = 1;
         Scanner scanner = new Scanner(System.in);
@@ -169,6 +171,12 @@ public class Menu extends Rubrica{
             }
             contatore++;
         }
+    }*/
+    public void importJson(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il json da salvare:");
+        String stringJson = scanner.next();
+        addAllJson(stringJson);
     }
 
     public void exportJsonSingolo(){
@@ -198,5 +206,34 @@ public class Menu extends Rubrica{
         System.out.print("\"Età\":\"" + eta + "\",");
         System.out.print("\"Telefono\":\"" + tel + "\",");
         System.out.print("\"Email\":\"" + email + "\"}\n");
+    }
+
+    public void exportJsonSingoloNuovo(){
+        Scanner scan = new Scanner(System.in);
+        do{
+            System.out.print("Scrivi Nome (obbligatorio): ");
+            nom = scan.nextLine();
+            if (nom.length() <= 0)
+                System.out.println("ERRORE\nci deve essere il nome obbligatorio");
+        } while(nom.length() <= 0);
+        System.out.print("Scrivi cognome: ");
+        cog = scan.nextLine();
+        System.out.print("Scrivi Eta: ");
+        eta = scan.nextLine();
+        do {
+            System.out.print("Scrivi Email: ");
+            email = scan.nextLine();
+            System.out.print("Scrivi Numero di Telefono: ");
+            tel = scan.nextLine();
+            if (email.length() <= 0 && tel.length() <= 0)
+                System.out.println("ERRORE\nci deve essere almeno il numero o l'email");
+        } while(email.length() <= 0 && tel.length() <= 0);
+
+        System.out.print("[{\"user\":{");
+        System.out.print("\"nome\":\"" + nom + "\",");
+        System.out.print("\"surname\":\"" + cog + "\",");
+        System.out.print("\"age\":\"" + eta + "\"},");
+        System.out.print("\"numero\":\"" + tel + "\",");
+        System.out.print("\"email\":\"" + email + "\"}]\n");
     }
 }

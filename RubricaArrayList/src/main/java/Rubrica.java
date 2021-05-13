@@ -1,8 +1,10 @@
 import Interfacce.GestioneRubrica;
 import Persone.Account;
 import Persone.User;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Rubrica implements GestioneRubrica {
     private ArrayList<Account> rubrica = new ArrayList<Account>();
@@ -187,6 +189,7 @@ public class Rubrica implements GestioneRubrica {
         rubrica.get(i).setEmail(s);
     }
 
+    /* vecchio metodo di exportJson
     public void exportJson(){
         System.out.println("Rubrica Json:");
         System.out.print("{rubrica:[");
@@ -203,5 +206,15 @@ public class Rubrica implements GestioneRubrica {
             }
         }
         System.out.println("]}");
+    }*/
+    /*public String exportJson(){
+        return new Gson().toJson(rubrica);
+    }*/
+    public void exportJson(){
+        System.out.println(new Gson().toJson(rubrica));
+    }
+
+    public void addAllJson(String json){
+        rubrica.addAll(Arrays.asList(new Gson().fromJson(json, Account[].class)));
     }
 }
