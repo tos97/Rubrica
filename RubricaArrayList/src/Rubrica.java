@@ -25,7 +25,7 @@ public class Rubrica implements GestioneRubrica {
         rubrica.add(new Account(new User(n, c, a), t, e));
     }
 
-    public void add(String d,String n, String c, String a, String e, String t) {
+    public void add(String d,String n, String c, String a, String t, String e) {
         rubrica.add(new Account(new User(n,c,a,d), t, e));
     }
 

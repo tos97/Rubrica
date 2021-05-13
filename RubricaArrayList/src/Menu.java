@@ -8,7 +8,7 @@ public class Menu extends Rubrica{
     private static Menu istance;
     //Scanner sc = new Scanner(System.in);
     private boolean fine = false;
-    private String id,nom,cog,eta,email,tel;
+    private String id = "",nom = "",cog = "",eta = "",email = "",tel = "";
 
     private Menu(){}
 
@@ -135,7 +135,7 @@ public class Menu extends Rubrica{
     }
 
     public void importJson(){
-
+        int contatore = 1;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il json da salvare:");
         String stringJson = scanner.next();
@@ -147,21 +147,27 @@ public class Menu extends Rubrica{
                 String[] stringSplitvirgola = stringSplit[i].split(",");
                 for (int j = 0;j < stringSplitvirgola.length;j++){
                     String[] stringSplitpunti = stringSplitvirgola[j].split(":");
-                    if (j == 0)
-                        id = stringSplitpunti[1];
-                    if (j == 1)
-                        nom = stringSplitpunti[1];
-                    if (j == 2)
-                        cog = stringSplitpunti[1];
-                    if (j == 3)
-                        eta = stringSplitpunti[1];
-                    if (j == 4)
-                        tel = stringSplitpunti[1];
-                    if (j == 5)
-                        email = stringSplitpunti[1];
+                    if (stringSplitpunti[0].equals("\"ID\""))
+                        id = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-1);
+                    if (stringSplitpunti[0].equals("\"Nome\""))
+                        nom = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-1);
+                    if (stringSplitpunti[0].equals("\"Cognome\""))
+                        cog = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-1);
+                    if (stringSplitpunti[0].equals("\"Età\""))
+                        eta = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-1);
+                    if (stringSplitpunti[0].equals("\"Telefono\""))
+                        tel = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-1);
+                    if (stringSplitpunti[0].equals("\"Email\"")) {
+                        if (stringSplit.length > 2 && contatore == (stringSplit.length-1))
+                            email = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-4);
+                        else{
+                            email = stringSplitpunti[1].substring(1,stringSplitpunti[1].length()-2);
+                        }
+                    }
                 }
                 add(id,nom,cog,eta,tel,email);
             }
+            contatore++;
         }
     }
 
