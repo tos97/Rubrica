@@ -1,11 +1,9 @@
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class Menu extends Rubrica{
 
-    private static Menu istance;
+    private static Menu istance = null;
     //Scanner sc = new Scanner(System.in);
     private boolean fine = false;
     private String id = "",nom = "",cog = "",eta = "",email = "",tel = "";
@@ -21,7 +19,7 @@ public class Menu extends Rubrica{
 
     public void start(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) Print All\n 6) Delete All\n 7) Salva tramite json\n 8) print All in Json\n 9) Trasforma dati inseriti in Json (vecchio)\n 10) Trasforma dati inseriti in Json (nuovo)");
+        System.out.println("\nMENU\n 0) Uscita\n 1) Add\n 2) Delete\n 3) Update\n 4) Search\n 5) Print All\n 6) Delete All\n 7) Salva tramite json\n 8) print All in Json\n 9) Trasforma dati inseriti in Json (vecchio)\n 10) Trasforma dati inseriti in Json (nuovo)\n 11) Import Json da File()\n 12) Export in file");
         try {
             int n = scan.nextInt();
             System.out.println();
@@ -37,6 +35,8 @@ public class Menu extends Rubrica{
                 case 8: exportJson(); break;
                 case 9: exportJsonSingolo(); break;
                 case 10: exportJsonSingoloNuovo(); break;
+                case 11: importJsonFile(); break;
+                case 12: exportJsonFile(); break;
                 default: System.out.println("ERRORE inserire un numero tra 0 a 7");
             }
         }
@@ -235,5 +235,17 @@ public class Menu extends Rubrica{
         System.out.print("\"age\":\"" + eta + "\"},");
         System.out.print("\"numero\":\"" + tel + "\",");
         System.out.print("\"email\":\"" + email + "\"}]\n");
+    }
+
+    public void importJsonFile(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("scrivi il nome del file dai cui prelevare la rubrica");
+        addAllJson(readFile(scan.next()));
+    }
+
+    public void exportJsonFile(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("scrivi il nome del file su cui salvare la rubrica");
+        writeFile(scan.next(),exportJson(""));
     }
 }

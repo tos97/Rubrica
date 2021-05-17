@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Rubrica implements GestioneRubrica {
+public class Rubrica extends MyFiles implements GestioneRubrica {
     private ArrayList<Account> rubrica = new ArrayList<Account>();
 
     public Rubrica() {
@@ -212,6 +212,10 @@ public class Rubrica implements GestioneRubrica {
     }*/
     public void exportJson(){
         System.out.println(new Gson().toJson(rubrica));
+    }
+
+    public String exportJson(String nome){
+        return new Gson().toJson(rubrica).toString();
     }
 
     public void addAllJson(String json){
