@@ -1,6 +1,6 @@
 import Interfacce.GestioneRubrica;
-import Persone.Account;
-import Persone.User;
+import Models.Account;
+import Models.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -9,10 +9,12 @@ import java.util.Arrays;
 public class Rubrica extends MyFiles implements GestioneRubrica {
     private ArrayList<Account> rubrica = new ArrayList<Account>();
 
-    public Rubrica() {
+    public Rubrica(int n) {
         rubrica.add(new Account(new User("Bendetto", "tosiani", "23"), "3312341300", "benedetto.tosiani@edu.unife.it"));
         rubrica.add(new Account(new User("Giorgio", "Vanni", "57"), "3339196342", ""));
     }
+
+    public Rubrica() {}
 
     /**
      * Nell'add di caricano i nuovi elementi nella rubrica
@@ -85,12 +87,25 @@ public class Rubrica extends MyFiles implements GestioneRubrica {
 
     @Override
     public void print(int i) {
+        System.out.println("ID: " + rubrica.get(i).getUser().getId());
         System.out.println("Nome: " + rubrica.get(i).getUser().getNome());
         System.out.println("Cognome: " + rubrica.get(i).getUser().getSurname());
         System.out.println("Età: " + rubrica.get(i).getUser().getAge());
         System.out.println("Telefono: " + rubrica.get(i).getNumero());
         System.out.println("Email: " + rubrica.get(i).getEmail());
         System.out.println();
+    }
+
+    public void print(ArrayList<Account> acc) {
+        for(Account persona: acc){
+            System.out.println("ID: " + persona.getUser().getId());
+            System.out.println("Nome: " + persona.getUser().getNome());
+            System.out.println("Cognome: " + persona.getUser().getSurname());
+            System.out.println("Età: " + persona.getUser().getAge());
+            System.out.println("Telefono: " + persona.getNumero());
+            System.out.println("Email: " + persona.getEmail());
+            System.out.println();
+        }
     }
 
     /**
@@ -220,5 +235,9 @@ public class Rubrica extends MyFiles implements GestioneRubrica {
 
     public void addAllJson(String json){
         rubrica.addAll(Arrays.asList(new Gson().fromJson(json, Account[].class)));
+    }
+
+    public ArrayList<Account> getRubrica(){
+        return rubrica;
     }
 }

@@ -1,4 +1,4 @@
-package Persone;
+package Models;
 
 public class Account {
 

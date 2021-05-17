@@ -4,7 +4,6 @@ import java.util.UUID;
 public class Menu extends Rubrica{
 
     private static Menu istance = null;
-    //Scanner sc = new Scanner(System.in);
     private boolean fine = false;
     private String id = "",nom = "",cog = "",eta = "",email = "",tel = "";
 
@@ -37,7 +36,7 @@ public class Menu extends Rubrica{
                 case 10: exportJsonSingoloNuovo(); break;
                 case 11: importJsonFile(); break;
                 case 12: exportJsonFile(); break;
-                default: System.out.println("ERRORE inserire un numero tra 0 a 7");
+                default: System.out.println("ERRORE inserire un numero tra 0 a 12");
             }
         }
         catch (Exception e){
